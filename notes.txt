@@ -1,0 +1,11 @@
+every time we add and app in django we need to add it in setings file 
+to create and app we need to write python startapp and then the name of the app 
+when we send a request to an url the view function will be called
+#for urls first the app go to storefront and do (path(
+    "playground",include(playground.urls)
+))
+this means if it has playground/smth it will automaticlly use the urls file from playground.url in which we have if we have playground/hello we will call 
+path("hello",views.hello)//here we are calling the function hello in views when we call playground/hello
+before starting in any project we need to build the schema of the database 
+and we kinda call it data modelling
+here we can represent relationships between data like one to one one to many and many to many 

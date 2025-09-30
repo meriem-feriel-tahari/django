@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.http import HttpResponse
+def home(req):
+    return HttpResponse("hell from home!")
 urlpatterns = [
     path('admin/', admin. site.urls),
-    path("playground/",include("playground.urls"))
+    path("playground/",include("playground.urls")),
+    path('', home),
 ]
