@@ -10,7 +10,8 @@ class product(models.Model):
     price=models.DecimalField(decimal_places=2,max_digits=6)#this two arguments are required
     inventory=models.IntegerField()
     last_update=models.DateTimeField(auto_now=True)
-    collection=models.ForeignKey(Collection,)
+    collection=models.ForeignKey(Collection,on_delete=models.protect)
+    promotion=models.ManyToManyField(promotion,related_name="products")
     # chaque collection has multiple proucts
     # so it is like one to many relationship one collection has many products 
     
@@ -42,13 +43,29 @@ class order(models.Model):
         (Failed,"Failed"),
              ],
     payment_status=models.CharField(max_length=1,choices=Choices,default=Pending)
-    # customer=models.ForeignKey(Customer,on_delete=models.CASCADE,primary_key=True)  
-
+    customer=models.ForeignKey(Customer,on_delete=models.protect,primary_key=True)  
+class OrderItem(models.Model):
+    order=models.ForeignKey(order,on_delete=models.protect)
+    product=models.ForeignKey(order,on_delete=models.protect)
+    quantity=models.PositiveSmallIntegerField()
+  
+    unit_price=models.DecimalField(max_digits=6,decimal_places=2)
+class Cart(models.Model):
+    Created_AT=models.DateTimeField(auto_now_add=True)
+class CartItem(models.Model):
+    cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
+    product=models.ForeignKey(product,on_delete=models.CASCADE)
+    quantity=models.PositiveSmallIntegerField()
+      
 class adress(models.Model):
+    
     street=models.CharField(max_length=20)    
     city=models.CharField(max_length=20)  
     customer=models.OneToOneField(Customer,on_delete=models.CASCADE,primary_key=True)  
     # this on delet arguments tell that if the customer is deleted all its orders are deleted 
-    # and the primary key tells that this is going to be considered as the primary key
+    # and the primary key tells that this is going to be considered as the primary ke
+class promotion (models.Model):
+    description=models.CharField(max_length=250)
+    discount=models.FloatField()
     
     
